@@ -1,18 +1,16 @@
 import { Router } from 'express';
+import { listFoods, getFoodById, createFood, updateFood, deleteFood } from './foodsController.ts';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('These are your foods')
-});
+router.get('/', listFoods);
 
-router.get('/:id', (req, res) => {
-  console.log(req.params);
-  res.send('One food found');
-});
+router.get('/:id', getFoodById);
 
-router.post('/', (req, res) => {
-  res.send('These are your foods')
-});
+router.post('/', createFood);
+
+router.put('/:id', updateFood);
+
+router.delete('/:id', deleteFood);
 
 export default router;
