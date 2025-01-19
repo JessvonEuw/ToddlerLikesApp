@@ -1,15 +1,19 @@
-import express from 'express';
-import foodsRoutes from './routes/foods/index.ts';
+import express, { json, urlencoded } from 'express';
+import preferencesRoutes from './routes/preferences/index.ts';
 
 const port = 3000;
+
 const app = express();
+
+app.use(urlencoded({ extended: false }));
+app.use(json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-// Food endpoints
-app.use('/foods', foodsRoutes);
+// Preference endpoints
+app.use('/preferences', preferencesRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
