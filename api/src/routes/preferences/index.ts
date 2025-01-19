@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { listPreferences, getPreferenceById, createPreference, updatePreference, deletePreference } from './preferencesController.ts';
+import {
+  listPreferences,
+  getPreferenceById,
+  createPreference,
+  updatePreference,
+  deletePreference,
+} from './preferencesController.ts';
 
 const router = Router();
 
