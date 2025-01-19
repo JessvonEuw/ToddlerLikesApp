@@ -1,6 +1,7 @@
 import express, { json, urlencoded } from 'express';
 import preferencesRoutes from './routes/preferences/index.ts';
 import itemsRoutes from './routes/items/index.ts';
+import tagsRoutes from './routes/tags/index.ts';
 
 const port = 3000;
 
@@ -12,6 +13,9 @@ app.use(json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+// Tag Routes
+app.use('/tags', tagsRoutes);
 
 // Item Routes
 app.use('/items', itemsRoutes);
