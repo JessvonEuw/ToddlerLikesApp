@@ -1,6 +1,11 @@
-import { integer, pgTable, text, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const itemsTable = pgTable('items', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar('name', { length: 255 }).notNull(),
+  name: varchar({ length: 255 }).notNull(),
 });
+
+export const createItemSchema = createInsertSchema(itemsTable);
+
+export const updateItemSchema = createInsertSchema(itemsTable);

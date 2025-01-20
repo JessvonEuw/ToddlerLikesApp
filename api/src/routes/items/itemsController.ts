@@ -33,7 +33,10 @@ export async function getItemById(req: Request, res: Response) {
 
 export async function createItem(req: Request, res: Response) {
   try {
-    const [item] = await db.insert(itemsTable).values(req.body).returning();
+    const [item] = await db
+      .insert(itemsTable)
+      .values(req.cleanBody)
+      .returning();
     res.status(201).json(item);
   } catch (e) {
     res.status(500).send(e);
@@ -43,7 +46,7 @@ export async function createItem(req: Request, res: Response) {
 export async function updateItem(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const updatedFields = req.body;
+    const updatedFields = req.cleanBody;
 
     const [item] = await db
       .update(itemsTable)
