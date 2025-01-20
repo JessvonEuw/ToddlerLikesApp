@@ -8,4 +8,4 @@ export const itemsTable = pgTable('items', {
 
 export const createItemSchema = createInsertSchema(itemsTable);
 
-export const updateItemSchema = createInsertSchema(itemsTable);
+export const updateItemSchema = createInsertSchema(itemsTable).partial();
