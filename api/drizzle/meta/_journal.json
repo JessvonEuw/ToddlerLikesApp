@@ -8,6 +8,13 @@
       "when": 1737430020619,
       "tag": "0000_lazy_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1737565037272,
+      "tag": "0001_abandoned_mathemanic",
+      "breakpoints": true
     }
   ]
 }

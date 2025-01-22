@@ -2,6 +2,7 @@ import express, { json, urlencoded } from 'express';
 import serverless from 'serverless-http';
 import authRoutes from './routes/auth/index.js';
 import itemsRoutes from './routes/items/index.js';
+import familiesRoutes from './routes/families/index.js';
 
 const port = 3000;
 
@@ -16,6 +17,9 @@ app.get('/', (req, res) => {
 
 // Auth Routes
 app.use('/auth', authRoutes);
+
+// Family Routes
+app.use('/families', familiesRoutes);
 
 // Item Routes
 app.use('/items', itemsRoutes);
