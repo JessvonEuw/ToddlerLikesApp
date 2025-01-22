@@ -1,3 +1,3 @@
-import * as itemsSchema from './itemsSchema';
+import * as itemsSchema from './schema/items';
 
 export default { ...itemsSchema };

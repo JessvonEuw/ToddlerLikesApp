@@ -6,7 +6,7 @@ import {
   updateItem,
   deleteItem,
 } from './itemsController.js';
-import { createItemSchema, updateItemSchema } from '../../db/itemsSchema.js';
+import { createItemSchema, updateItemSchema } from '../../db/schema/items.js';
 import { validateData } from '../../middlewares/validationMiddleware.js';
 import { verifyToken, verifyParent } from '../../middlewares/authMiddleware.js';
 
