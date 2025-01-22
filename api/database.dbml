@@ -1,0 +1,42 @@
+Table "drizzle"."__drizzle_migrations" {
+  "id" int4 [pk, not null, increment]
+  "hash" text [not null]
+  "created_at" int8
+}
+
+Table "families" {
+  "id" int4 [pk, not null, increment]
+  "name" varchar(255) [not null]
+}
+
+Table "items" {
+  "id" int4 [pk, not null, increment]
+  "name" varchar(255) [not null]
+}
+
+Table "preferences" {
+  "id" int4 [pk, not null, increment]
+  "item_id" varchar(255) [not null]
+  "note" text
+  "rating" int4
+  "lastDate" date
+}
+
+Table "tags" {
+  "id" int4 [pk, not null, increment]
+  "name" varchar(50) [not null]
+}
+
+Table "users" {
+  "id" int4 [pk, not null, increment]
+  "name" varchar(255) [not null]
+  "email" varchar(255) [unique, not null]
+  "password" varchar(255) [not null]
+  "role" varchar(255) [not null, default: 'user']
+  "canLogin" bool [default: false]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+  "familyId" int4
+}
+
+Ref "users_familyId_families_id_fk":"families"."id" < "users"."familyId"
