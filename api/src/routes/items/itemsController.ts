@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { db } from '../../db/index.ts';
-import { itemsTable } from '../../db/itemsSchema.ts';
+import { db } from '../../db/index.js';
+import { itemsTable } from '../../db/itemsSchema.js';
 import { eq } from 'drizzle-orm';
 
 export async function listItems(req: Request, res: Response) {

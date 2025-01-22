@@ -2,13 +2,13 @@ import express, { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
-import { db } from '../../db/index.ts';
+import { db } from '../../db/index.js';
 import {
   createLoginSchema,
   createUsersSchema,
   usersTable,
-} from '../../db/usersSchema.ts';
-import { validateData } from '../../middlewares/validationMiddleware.ts';
+} from '../../db/usersSchema.js';
+import { validateData } from '../../middlewares/validationMiddleware.js';
 
 const router = Router();
 

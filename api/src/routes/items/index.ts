@@ -5,10 +5,10 @@ import {
   createItem,
   updateItem,
   deleteItem,
-} from './itemsController.ts';
-import { createItemSchema, updateItemSchema } from '../../db/itemsSchema.ts';
-import { validateData } from '../../middlewares/validationMiddleware.ts';
-import { verifyToken, verifyParent } from '../../middlewares/authMiddleware.ts';
+} from './itemsController.js';
+import { createItemSchema, updateItemSchema } from '../../db/itemsSchema.js';
+import { validateData } from '../../middlewares/validationMiddleware.js';
+import { verifyToken, verifyParent } from '../../middlewares/authMiddleware.js';
 
 const router = Router();
 

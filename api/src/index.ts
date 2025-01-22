@@ -1,8 +1,6 @@
 import express, { json, urlencoded } from 'express';
-import preferencesRoutes from './routes/preferences/index.ts';
-import itemsRoutes from './routes/items/index.ts';
-import tagsRoutes from './routes/tags/index.ts';
-import authRoutes from './routes/auth/index.ts';
+import authRoutes from './routes/auth/index.js';
+import itemsRoutes from './routes/items/index.js';
 
 const port = 3000;
 
@@ -18,14 +16,8 @@ app.get('/', (req, res) => {
 // Auth Routes
 app.use('/auth', authRoutes);
 
-// Tag Routes
-app.use('/tags', tagsRoutes);
-
 // Item Routes
 app.use('/items', itemsRoutes);
-
-// Preference endpoints
-app.use('/preferences', preferencesRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

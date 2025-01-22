@@ -1,5 +1,4 @@
 import type { Request, Response, NextFunction } from 'express';
-import { createItemSchema } from '../db/itemsSchema.ts';
 import _ from 'lodash';
 import { z, ZodError } from 'zod';
 

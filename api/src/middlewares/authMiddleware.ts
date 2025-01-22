@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const token = req.header('Authorization');
@@ -11,12 +11,15 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
 
   try {
     // decode jwt token
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY!);
-    console.log('decoded: ', decodedToken);
+    const decodedToken = jwt.verify(
+      token,
+      process.env.JWT_SECRET_KEY!
+    ) as JwtPayload;
+
     if (typeof decodedToken !== 'object' || !decodedToken?.userId) {
       res.status(401).json({ error: 'Access denied' });
     }
-    console.log('token role: ', decodedToken?.role);
+
     req.userId = decodedToken?.userId;
     req.role = decodedToken?.role;
     next();
@@ -28,7 +31,6 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
 export function verifyParent(req: Request, res: Response, next: NextFunction) {
   const role = req.role;
   if (role !== 'parent') {
-    console.log('role1: ', role);
     res.status(401).json({ error: 'Access denied' });
     return;
   }
