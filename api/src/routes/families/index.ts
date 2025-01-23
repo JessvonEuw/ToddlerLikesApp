@@ -8,6 +8,7 @@ import {
 } from './familiesController.js';
 import { validateData } from '../../middlewares/validationMiddleware.js';
 import { createFamiliesSchema } from '../../db/schema/families.js';
+import { verifyParent, verifyToken } from '../../middlewares/authMiddleware.js';
 
 const router = Router();
 
@@ -18,12 +19,24 @@ router.get('/', listFamilies);
 router.get('/:id', getFamilyById);
 
 // Create a family
-router.post('/', validateData(createFamiliesSchema), createFamily);
+router.post(
+  '/',
+  verifyToken,
+  verifyParent,
+  validateData(createFamiliesSchema),
+  createFamily
+);
 
 // Update a family
-router.put('/:id', validateData(createFamiliesSchema), updateFamily);
+router.put(
+  '/:id',
+  verifyToken,
+  verifyParent,
+  validateData(createFamiliesSchema),
+  updateFamily
+);
 
 // Delete a family
-router.delete('/:id', validateData(createFamiliesSchema), deleteFamily);
+router.delete('/:id', verifyToken, verifyParent, deleteFamily);
 
 export default router;
