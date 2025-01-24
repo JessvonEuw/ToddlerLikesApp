@@ -1,6 +1,6 @@
 import {
-  boolean,
   integer,
+  pgEnum,
   pgTable,
   timestamp,
   varchar,
@@ -8,21 +8,20 @@ import {
 import { createInsertSchema } from 'drizzle-zod';
 import { familiesTable } from './families';
 
+export const roleEnum = pgEnum('role', ['parent', 'kid']);
+
 export const usersTable = pgTable('users', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
   password: varchar({ length: 255 }).notNull(),
-  role: varchar({ length: 255 }).notNull().default('user'),
-  canLogin: boolean().default(false),
+  role: roleEnum('role').default('parent').notNull(),
+  familyId: integer().references(() => familiesTable.id),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
-  familyId: integer().references(() => familiesTable.id),
 });
 
-export const createUsersSchema = createInsertSchema(usersTable).omit({
-  role: true,
-});
+export const createUsersSchema = createInsertSchema(usersTable);
 
 // Only need email and password for login
 export const createLoginSchema = createInsertSchema(usersTable).pick({

@@ -23,6 +23,13 @@ router.post(
   validateData(createItemSchema),
   createItem
 );
+router.post(
+  '/tags',
+  verifyToken,
+  verifyParent,
+  validateData(createItemSchema),
+  createItem
+);
 
 router.put(
   '/:id',
