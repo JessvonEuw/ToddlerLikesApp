@@ -21,10 +21,16 @@ export const usersTable = pgTable('users', {
   updatedAt: timestamp().notNull().defaultNow(),
 });
 
-export const createUsersSchema = createInsertSchema(usersTable);
+export const createUsersSchema = createInsertSchema(usersTable).omit({
+  familyId: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 // Only need email and password for login
-export const createLoginSchema = createInsertSchema(usersTable).pick({
-  email: true,
-  password: true,
+export const createLoginSchema = createInsertSchema(usersTable).omit({
+  role: true,
+  familyId: true,
+  createdAt: true,
+  updatedAt: true,
 });
