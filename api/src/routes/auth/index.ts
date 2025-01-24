@@ -3,10 +3,9 @@ import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 import { db } from '../../db/index.js';
-import {
+import usersTable, {
   createLoginSchema,
   createUsersSchema,
-  usersTable,
 } from '../../db/schema/users.js';
 import { validateData } from '../../middlewares/validationMiddleware.js';
 
@@ -17,6 +16,7 @@ router.post(
   validateData(createUsersSchema),
   async (req: express.Request, res: express.Response) => {
     try {
+      console.log(req.cleanBody);
       const data = req.cleanBody;
       data.password = await bcrypt.hash(data.password, 10);
 

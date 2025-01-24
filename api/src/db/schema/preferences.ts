@@ -1,19 +1,19 @@
 import { date, integer, pgEnum, pgTable, text } from 'drizzle-orm/pg-core';
-import { itemsTable } from './items';
-import { usersTable } from './users';
-import { familiesTable } from './families';
+import items from './items';
+import usersTable from './users';
+import familiesTable from './families';
 import { createInsertSchema } from 'drizzle-zod';
 
 export const preferenceEnum = pgEnum('rating', ['1', '2', '3', '4', '5']);
 
-export const preferencesTable = pgTable('preferences', {
+const preferences = pgTable('preferences', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   preference: preferenceEnum('rating'),
   note: text(),
   lastTried: date({ mode: 'date' }),
   itemId: integer()
     .notNull()
-    .references(() => itemsTable.id),
+    .references(() => items.id),
   userId: integer()
     .notNull()
     .references(() => usersTable.id),
@@ -22,6 +22,10 @@ export const preferencesTable = pgTable('preferences', {
     .references(() => familiesTable.id),
 });
 
-export const createPreferencesSchema = createInsertSchema(
-  preferencesTable
-).omit({ itemId: true, userId: true, familyId: true });
+export const createPreferencesSchema = createInsertSchema(preferences).omit({
+  itemId: true,
+  userId: true,
+  familyId: true,
+});
+
+export default preferences;

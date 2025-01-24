@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { db } from '../../db/index.js';
-import { itemsTable } from '../../db/schema/items.js';
+import itemsTable from '../../db/schema/items.js';
 import { eq } from 'drizzle-orm';
 
 export async function listItems(req: Request, res: Response) {
@@ -32,6 +32,23 @@ export async function getItemById(req: Request, res: Response) {
 }
 
 export async function createItem(req: Request, res: Response) {
+  try {
+    console.log('user', req.userId);
+    const userId = req.userId;
+    if (!userId) {
+      res.status(400).send({ message: 'Invalid item data' });
+    }
+    const [item] = await db
+      .insert(itemsTable)
+      .values(req.cleanBody)
+      .returning();
+    res.status(201).json(item);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+}
+
+export async function createItemWithTags(req: Request, res: Response) {
   try {
     const [item] = await db
       .insert(itemsTable)

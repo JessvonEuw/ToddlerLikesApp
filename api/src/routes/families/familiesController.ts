@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
 import { db } from '../../db/index.js';
-import { familiesTable } from '../../db/schema/families';
+import familiesTable from '../../db/schema/families';
 
 export async function listFamilies(req: Request, res: Response) {
   try {

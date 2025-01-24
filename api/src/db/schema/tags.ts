@@ -1,9 +1,9 @@
 import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-import { familiesTable } from './families';
-import { usersTable } from './users';
+import familiesTable from './families';
+import usersTable from './users';
 
-export const tagsTable = pgTable('tags', {
+const tagsTable = pgTable('tags', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 50 }).notNull(),
   familyId: integer().references(() => familiesTable.id),
@@ -19,3 +19,5 @@ export const createTagsSchema = createInsertSchema(tagsTable).omit({
   createdAt: true,
   updatedAt: true,
 });
+
+export default tagsTable;

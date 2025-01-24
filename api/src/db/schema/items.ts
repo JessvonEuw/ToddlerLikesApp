@@ -7,11 +7,11 @@ import {
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import { familiesTable } from './families';
-import { tagsTable } from './tags';
-import { usersTable } from './users';
+import familiesTable from './families';
+import tagsTable from './tags';
+import usersTable from './users';
 
-export const itemsTable = pgTable('items', {
+const itemsTable = pgTable('items', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   description: text(),
@@ -33,18 +33,25 @@ export const itemsTagsTable = pgTable('items_tags', {
     .notNull(),
 });
 
-export const createItemSchema = createInsertSchema(itemsTable).pick({
-  name: true,
-  description: true,
-  createdBy: true,
+export const createItemSchema = createInsertSchema(itemsTable).omit({
   familyId: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
-export const updateItemSchema = createInsertSchema(itemsTable).partial();
+export const updateItemSchema = createInsertSchema(itemsTable).partial().omit({
+  familyId: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
-export const createItemTagsSchema = createInsertSchema(itemsTagsTable);
+export const createItemTagSchema = createInsertSchema(itemsTagsTable).omit({
+  itemId: true,
+});
 
-export const insertItemWithTagsSchema = z.object({
+export const createItemWithTagsSchema = z.object({
   item: createItemSchema,
-  tags: z.array(createItemTagsSchema),
+  tags: z.array(createItemTagSchema),
 });
+
+export default itemsTable;

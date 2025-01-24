@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
 import { db } from '../../db';
-import { tagsTable } from '../../db/schema/tags';
+import tagsTable from '../../db/schema/tags';
 
 export async function listTags(req: Request, res: Response) {
   try {
@@ -13,15 +13,17 @@ export async function listTags(req: Request, res: Response) {
   }
 }
 
-export async function getTagById(req: Request, res: Response) {}
-
-export async function getTagsByFamilyId(req: Request, res: Response) {}
-
 export async function createTag(req: Request, res: Response) {
   try {
-    const [tag] = await db.insert(tagsTable).values(req.cleanBody).returning();
+    const userId = req.userId;
+    console.log({ familyId: 2, createdBy: userId, ...req.cleanBody });
+    const [tag] = await db
+      .insert(tagsTable)
+      .values({ familyId: 2, createdBy: userId, ...req.cleanBody })
+      .returning();
     res.status(201).json(tag);
   } catch (e) {
+    console.log('yikes');
     res.status(500).send(e);
   }
 }

@@ -7,11 +7,22 @@ Table "drizzle"."__drizzle_migrations" {
 Table "families" {
   "id" int4 [pk, not null, increment]
   "name" varchar(255) [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
 }
 
 Table "items" {
   "id" int4 [pk, not null, increment]
   "name" varchar(255) [not null]
+  "familyId" int4
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+}
+
+Table "items_tags" {
+  "id" int4 [pk, not null, increment]
+  "itemId" int4 [not null]
+  "tagId" int4 [not null]
 }
 
 Table "preferences" {
@@ -25,6 +36,9 @@ Table "preferences" {
 Table "tags" {
   "id" int4 [pk, not null, increment]
   "name" varchar(50) [not null]
+  "familyId" int4
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
 }
 
 Table "users" {
@@ -38,5 +52,13 @@ Table "users" {
   "updatedAt" timestamp [not null, default: `now()`]
   "familyId" int4
 }
+
+Ref "items_familyId_families_id_fk":"families"."id" < "items"."familyId"
+
+Ref "items_tags_itemId_items_id_fk":"items"."id" < "items_tags"."itemId"
+
+Ref "items_tags_tagId_tags_id_fk":"tags"."id" < "items_tags"."tagId"
+
+Ref "tags_familyId_families_id_fk":"families"."id" < "tags"."familyId"
 
 Ref "users_familyId_families_id_fk":"families"."id" < "users"."familyId"
