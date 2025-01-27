@@ -1,12 +1,7 @@
-import { Table } from 'drizzle-orm';
-import { db, pool } from '../../db';
-import { families } from '../../db/schema';
+import db from '@/db';
+import { families } from '@/db/schema';
+import familiesData from './data/families.json';
 
-export default async function seed() {
-  await db.insert(families).values({ name: 'Carters' }).returning();
+export default async function seed(db: db) {
+  await db.insert(families).values(familiesData).returning();
 }
-
-seed().catch(error => {
-  console.error('Error while seeding:', error);
-  process.exit(1);
-});

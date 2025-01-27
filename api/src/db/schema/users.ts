@@ -13,8 +13,8 @@ export const roleEnum = pgEnum('role', ['parent', 'child']);
 const users = pgTable('users', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  email: varchar({ length: 255 }).notNull().unique(),
-  password: varchar({ length: 255 }).notNull(),
+  email: varchar({ length: 255 }).unique(),
+  password: varchar({ length: 255 }),
   role: roleEnum('role').default('parent').notNull(),
   familyId: integer().references(() => families.id),
   createdAt: timestamp({ mode: 'string' }).notNull().defaultNow(),

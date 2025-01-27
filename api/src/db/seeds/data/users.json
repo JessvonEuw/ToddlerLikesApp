@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Gomez Addams",
+    "email": "gomez@addamsfamily.com",
+    "password": "morticia1",
+    "role": "parent",
+    "familyName": "Addams"
+  },
+  {
+    "name": "Morticia Addams",
+    "email": "morticia@addamsfamily.com",
+    "password": "gomez1",
+    "role": "parent",
+    "familyName": "Addams"
+  },
+  {
+    "name": "Wednesday Addams",
+    "role": "child",
+    "familyName": "Addams"
+  },
+  {
+    "name": "Pugsley Addams",
+    "role": "child",
+    "familyName": "Addams"
+  },
+  {
+    "name": "Bob Belcher",
+    "email": "bob@bobsburgers.com",
+    "password": "burg3r1",
+    "role": "parent",
+    "familyName": "Belchers"
+  },
+  {
+    "name": "Linda Belcher",
+    "email": "linda@bobsburgers.com",
+    "password": "burgering1",
+    "role": "parent",
+    "familyName": "Belchers"
+  },
+  {
+    "name": "Tina Belcher",
+    "role": "child",
+    "familyName": "Belchers"
+  },
+  {
+    "name": "Gene Belcher",
+    "role": "child",
+    "familyName": "Belchers"
+  },
+  {
+    "name": "Louise Belcher",
+    "role": "child",
+    "familyName": "Belchers"
+  }
+]
