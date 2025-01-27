@@ -2,8 +2,8 @@ import express, { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
-import { db } from '../../db/index.js';
-import usersTable, {
+import { db } from '@/db/index.js';
+import users, {
   createLoginSchema,
   createUsersSchema,
 } from '../../db/schema/users.js';
@@ -20,7 +20,7 @@ router.post(
       const data = req.cleanBody;
       data.password = await bcrypt.hash(data.password, 10);
 
-      const [user] = await db.insert(usersTable).values(data).returning();
+      const [user] = await db.insert(users).values(data).returning();
 
       // @ts-ignore
       delete user.password;
@@ -41,8 +41,8 @@ router.post(
 
       const [user] = await db
         .select()
-        .from(usersTable)
-        .where(eq(usersTable.email, email));
+        .from(users)
+        .where(eq(users.email, email));
 
       if (!user) {
         // Don't provide too much info in message, hackers can use these details

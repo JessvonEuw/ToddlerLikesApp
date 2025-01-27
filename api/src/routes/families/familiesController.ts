@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
-import { db } from '../../db/index.js';
-import familiesTable from '../../db/schema/families';
+import { db } from '../../db';
+import families from '../../db/schema/families';
 
 export async function listFamilies(req: Request, res: Response) {
   try {
-    const families = await db.select().from(familiesTable);
+    const familiesList = await db.select().from(families);
 
-    res.json(families);
+    res.json(familiesList);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -16,10 +16,7 @@ export async function listFamilies(req: Request, res: Response) {
 export async function getFamilyById(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const [item] = await db
-      .select()
-      .from(familiesTable)
-      .where(eq(familiesTable.id, id));
+    const [item] = await db.select().from(families).where(eq(families.id, id));
 
     if (!item) {
       res.status(404).send({ message: 'Item not found' });
@@ -33,10 +30,7 @@ export async function getFamilyById(req: Request, res: Response) {
 
 export async function createFamily(req: Request, res: Response) {
   try {
-    const [family] = await db
-      .insert(familiesTable)
-      .values(req.body)
-      .returning();
+    const [family] = await db.insert(families).values(req.body).returning();
 
     res.status(201).json(family);
   } catch (e) {
@@ -51,9 +45,9 @@ export async function updateFamily(req: Request, res: Response) {
     console.log(updatedFields);
 
     const [family] = await db
-      .update(familiesTable)
+      .update(families)
       .set(updatedFields)
-      .where(eq(familiesTable.id, id))
+      .where(eq(families.id, id))
       .returning();
 
     if (!family) {
@@ -71,8 +65,8 @@ export async function deleteFamily(req: Request, res: Response) {
     const id = Number(req.params.id);
 
     const [deletedFamily] = await db
-      .delete(familiesTable)
-      .where(eq(familiesTable.id, id))
+      .delete(families)
+      .where(eq(families.id, id))
       .returning();
 
     if (!deletedFamily) {

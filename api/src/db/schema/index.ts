@@ -1,5 +1,5 @@
-export { default as familiesTable } from './families';
-export { default as itemsTable } from './items';
-export { default as tagsTable } from './tags';
-export { default as usersTable } from './users';
-export { default as preferencesTable } from './users';
+export { default as families } from './families';
+export { default as items } from './items';
+export { default as tags } from './tags';
+export { default as users } from './users';
+export { default as preferences } from './users';
