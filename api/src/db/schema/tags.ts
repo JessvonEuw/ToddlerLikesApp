@@ -1,7 +1,6 @@
 import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-import families from './families';
-import users from './users';
+import { families, users } from '@/db/schema';
 
 const tags = pgTable('tags', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

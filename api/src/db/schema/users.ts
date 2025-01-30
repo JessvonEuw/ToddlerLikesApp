@@ -6,7 +6,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-import families from './families';
+import { families } from '@/db/schema';
 
 export const roleEnum = pgEnum('role', ['parent', 'child']);
 

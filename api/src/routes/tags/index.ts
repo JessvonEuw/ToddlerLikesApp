@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { createTagsSchema } from '../../db/schema/tags';
+import { createTagsSchema } from '@/db/schema';
 import { createTag, deleteTag, listTags, updateTag } from './tagsController';
-import { validateData } from '../../middlewares/validationMiddleware';
-import { verifyParent, verifyToken } from '../../middlewares/authMiddleware';
+import { validateData } from '@/middlewares/validationMiddleware';
+import { verifyParent, verifyToken } from '@/middlewares/authMiddleware';
 
 const router = Router();
 

@@ -2,12 +2,9 @@ import express, { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
-import { db } from '@/db/index.js';
-import users, {
-  createLoginSchema,
-  createUsersSchema,
-} from '../../db/schema/users.js';
-import { validateData } from '../../middlewares/validationMiddleware.js';
+import { db } from '@/db';
+import { createLoginSchema, createUsersSchema, users } from '@/db/schema';
+import { validateData } from '@/middlewares/validationMiddleware.js';
 
 const router = Router();
 
@@ -16,16 +13,15 @@ router.post(
   validateData(createUsersSchema),
   async (req: express.Request, res: express.Response) => {
     try {
-      console.log(req.cleanBody);
       const data = req.cleanBody;
       data.password = await bcrypt.hash(data.password, 10);
 
-      const [user] = await db.insert(users).values(data).returning();
+      const [registeredUser] = await db.insert(users).values(data).returning();
 
       // @ts-ignore
-      delete user.password;
+      delete registeredUser.password;
 
-      res.status(201).json({ user });
+      res.status(201).json({ registeredUser });
     } catch (e) {
       res.status(500).send('Something went wrong');
     }
@@ -39,18 +35,21 @@ router.post(
     try {
       const { email, password } = req.cleanBody;
 
-      const [user] = await db
+      const [loginUser] = await db
         .select()
         .from(users)
         .where(eq(users.email, email));
 
-      if (!user) {
+      if (!loginUser) {
         // Don't provide too much info in message, hackers can use these details
         res.status(401).send({ message: 'Authentication failed' });
         return;
       }
 
-      const passwordMatched = await bcrypt.compare(password, user.password);
+      const passwordMatched = await bcrypt.compare(
+        password,
+        loginUser.password
+      );
 
       if (!passwordMatched) {
         // Don't provide too much info in message, hackers can use these details
@@ -60,15 +59,15 @@ router.post(
 
       // Create a jwt token for the user
       const token = jwt.sign(
-        { userId: user.id, role: user.role },
+        { userId: loginUser.id, role: loginUser.role },
         process.env.JWT_SECRET_KEY!,
         { expiresIn: '30d' }
       );
 
       // @ts-ignore
-      delete user.password;
+      delete loginUser.password;
 
-      res.status(200).json({ token, user });
+      res.status(200).json({ token, loginUser });
     } catch (e) {
       res.status(500).send('Something went wrong');
     }

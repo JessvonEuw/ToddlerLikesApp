@@ -1,8 +1,8 @@
 import db from '@/db';
 import bcrypt from 'bcryptjs';
+import { eq } from 'drizzle-orm';
 import { users, families } from '@/db/schema';
 import usersData from './data/users.json';
-import { eq } from 'drizzle-orm';
 
 export default async function seed(db: db) {
   const insertUserData = await Promise.all(

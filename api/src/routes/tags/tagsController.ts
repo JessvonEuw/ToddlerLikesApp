@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
-import { db } from '../../db';
-import tags from '../../db/schema/tags';
+import { db } from '@/db';
+import { tags } from '@/db/schema';
 
 export async function listTags(req: Request, res: Response) {
   try {
-    const items = await db.select().from(tags);
+    const tagsList = await db.select().from(tags);
 
-    res.json(items);
+    res.json(tagsList);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -16,14 +16,14 @@ export async function listTags(req: Request, res: Response) {
 export async function createTag(req: Request, res: Response) {
   try {
     const userId = req.userId;
-    console.log({ familyId: 2, createdBy: userId, ...req.cleanBody });
-    const [tag] = await db
+
+    const [createdTag] = await db
       .insert(tags)
       .values({ familyId: 2, createdBy: userId, ...req.cleanBody })
       .returning();
-    res.status(201).json(tag);
+
+    res.status(201).json(createdTag);
   } catch (e) {
-    console.log('yikes');
     res.status(500).send(e);
   }
 }
@@ -32,16 +32,16 @@ export async function updateTag(req: Request, res: Response) {
     const id = Number(req.params.id);
     const updatedFields = req.cleanBody;
 
-    const [item] = await db
+    const [updatedTag] = await db
       .update(tags)
       .set(updatedFields)
       .where(eq(tags.id, id))
       .returning();
 
-    if (!item) {
+    if (!updatedTag) {
       res.status(404).send({ message: 'Tag not found' });
     } else {
-      res.json(item);
+      res.json(updatedTag);
     }
   } catch (e) {
     res.status(500).send(e);

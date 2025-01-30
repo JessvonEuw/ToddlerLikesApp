@@ -6,9 +6,9 @@ import {
   listFamilies,
   updateFamily,
 } from './familiesController.js';
-import { validateData } from '../../middlewares/validationMiddleware.js';
-import { createFamiliesSchema } from '../../db/schema/families.js';
-import { verifyParent, verifyToken } from '../../middlewares/authMiddleware.js';
+import { validateData } from '@/middlewares/validationMiddleware.js';
+import { createFamiliesSchema } from '@/db/schema';
+import { verifyParent, verifyToken } from '@/middlewares/authMiddleware.js';
 
 const router = Router();
 

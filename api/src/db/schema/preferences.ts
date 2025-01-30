@@ -1,8 +1,6 @@
 import { date, integer, pgEnum, pgTable, text } from 'drizzle-orm/pg-core';
-import items from './items';
-import users from './users';
-import families from './families';
 import { createInsertSchema } from 'drizzle-zod';
+import { families, items, users } from '@/db/schema';
 
 const preferences = pgTable('preferences', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

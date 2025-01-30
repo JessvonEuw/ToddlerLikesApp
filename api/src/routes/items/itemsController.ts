@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
-import { db } from '../../db/index.js';
-import itemsTable from '../../db/schema/items.js';
 import { eq } from 'drizzle-orm';
+import { db } from '@/db';
+import { items } from '@/db/schema';
 
 export async function listItems(req: Request, res: Response) {
   try {
-    const items = await db.select().from(itemsTable);
+    const itemsList = await db.select().from(items);
 
-    res.json(items);
+    res.json(itemsList);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -16,15 +16,12 @@ export async function listItems(req: Request, res: Response) {
 export async function getItemById(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
-    const [item] = await db
-      .select()
-      .from(itemsTable)
-      .where(eq(itemsTable.id, id));
+    const [foundItem] = await db.select().from(items).where(eq(items.id, id));
 
-    if (!item) {
+    if (!foundItem) {
       res.status(404).send({ message: 'Item not found' });
     } else {
-      res.json(item);
+      res.json(foundItem);
     }
   } catch (e) {
     res.status(500).send(e);
@@ -33,16 +30,15 @@ export async function getItemById(req: Request, res: Response) {
 
 export async function createItem(req: Request, res: Response) {
   try {
-    console.log('user', req.userId);
     const userId = req.userId;
     if (!userId) {
       res.status(400).send({ message: 'Invalid item data' });
     }
-    const [item] = await db
-      .insert(itemsTable)
+    const [createdItem] = await db
+      .insert(items)
       .values(req.cleanBody)
       .returning();
-    res.status(201).json(item);
+    res.status(201).json(createdItem);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -50,11 +46,11 @@ export async function createItem(req: Request, res: Response) {
 
 export async function createItemWithTags(req: Request, res: Response) {
   try {
-    const [item] = await db
-      .insert(itemsTable)
+    const [createdItem] = await db
+      .insert(items)
       .values(req.cleanBody)
       .returning();
-    res.status(201).json(item);
+    res.status(201).json(createdItem);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -65,16 +61,16 @@ export async function updateItem(req: Request, res: Response) {
     const id = Number(req.params.id);
     const updatedFields = req.cleanBody;
 
-    const [item] = await db
-      .update(itemsTable)
+    const [updatedItem] = await db
+      .update(items)
       .set(updatedFields)
-      .where(eq(itemsTable.id, id))
+      .where(eq(items.id, id))
       .returning();
 
-    if (!item) {
+    if (!updatedItem) {
       res.status(404).send({ message: 'Item not found' });
     } else {
-      res.json(item);
+      res.json(updatedItem);
     }
   } catch (e) {
     res.status(500).send(e);
@@ -86,8 +82,8 @@ export async function deleteItem(req: Request, res: Response) {
     const id = Number(req.params.id);
 
     const [deletedItem] = await db
-      .delete(itemsTable)
-      .where(eq(itemsTable.id, id))
+      .delete(items)
+      .where(eq(items.id, id))
       .returning();
 
     if (!deletedItem) {
