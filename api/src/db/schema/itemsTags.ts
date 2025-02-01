@@ -3,7 +3,7 @@ import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { createItemsSchema, items, tags } from '@/db/schema';
 
-const itemTag = pgTable('item_tag', {
+const itemsTags = pgTable('items_tags', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   itemId: integer()
     .notNull()
@@ -11,11 +11,9 @@ const itemTag = pgTable('item_tag', {
   tagId: integer()
     .notNull()
     .references(() => tags.id),
-  createdAt: timestamp().notNull().defaultNow(),
-  updatedAt: timestamp().notNull().defaultNow(),
 });
 
-export const createItemsTagsSchema = createInsertSchema(itemTag).omit({
+export const createItemsTagsSchema = createInsertSchema(itemsTags).omit({
   itemId: true,
 });
 
@@ -24,4 +22,4 @@ export const createItemsWithTagsSchema = z.object({
   tags: z.array(createItemsTagsSchema),
 });
 
-export default itemTag;
+export default itemsTags;

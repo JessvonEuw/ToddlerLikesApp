@@ -20,16 +20,6 @@ const items = pgTable('items', {
   updatedAt: timestamp().notNull().defaultNow(),
 });
 
-export const itemsTags = pgTable('items_tags', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  itemId: integer()
-    .references(() => items.id)
-    .notNull(),
-  tagId: integer()
-    .references(() => tags.id)
-    .notNull(),
-});
-
 export const createItemsSchema = createInsertSchema(items).omit({
   familyId: true,
   createdAt: true,

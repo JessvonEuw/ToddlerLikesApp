@@ -4,6 +4,7 @@ export {
   createItemsSchema,
   updateItemsSchema,
 } from './items';
+export { default as itemsTags } from './itemsTags';
 export { default as tags, createTagsSchema } from './tags';
 export {
   default as users,
