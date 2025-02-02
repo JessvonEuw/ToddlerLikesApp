@@ -3,10 +3,6 @@ import { Table, getTableName, sql } from 'drizzle-orm';
 import * as schema from '@/db/schema';
 import * as seeds from '@/db/seeds';
 
-export default async function seed(db: db) {
-  await seeds.families(db);
-}
-
 async function resetTables(db: db, table: Table) {
   return db.execute(
     sql.raw(`TRUNCATE TABLE ${getTableName(table)} RESTART IDENTITY CASCADE`)
@@ -17,13 +13,16 @@ for (const table of [
   schema.families,
   schema.users,
   schema.items,
-  schema.preferences,
   schema.tags,
+  schema.itemsTags,
+  schema.preferences,
 ]) {
   await resetTables(db, table);
 }
 
-await seeds.families(db);
-await seeds.users(db);
+await seeds.seedFamilies(db);
+await seeds.seedUsers(db);
+await seeds.seedItemsandTags(db);
+await seeds.seedPreferences(db);
 
 await pool.end();

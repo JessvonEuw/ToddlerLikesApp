@@ -1,0 +1,74 @@
+[
+  {
+    "familyName": "Addams",
+    "preferredBy": "Wednesday Addams",
+    "createdBy": "Morticia Addams",
+    "itemName": "Electric Chair",
+    "rating": 5,
+    "note": "Perfect for family game night",
+    "lastChecked": "2025-01-15"
+  },
+  {
+    "familyName": "Addams",
+    "preferredBy": "Pugsley Addams",
+    "createdBy": "Morticia Addams",
+    "itemName": "Skeletons",
+    "rating": 3,
+    "note": "Favorite animal pet",
+    "lastChecked": "2024-10-17"
+  },
+  {
+    "familyName": "Addams",
+    "preferredBy": "Pugsley Addams",
+    "createdBy": "Gomez Addams",
+    "itemName": "Spiders",
+    "rating": 3,
+    "note": "Favorite animal pet",
+    "lastChecked": "2024-10-17"
+  },
+  {
+    "familyName": "Addams",
+    "preferredBy": "Wednesday Addams",
+    "createdBy": "Gomez Addams",
+    "itemName": "Thing",
+    "rating": 3,
+    "note": "Best allie",
+    "lastChecked": "2024-10-17"
+  },
+  {
+    "familyName": "Belchers",
+    "preferredBy": "Gene Belcher",
+    "createdBy": "Bob Belcher",
+    "itemName": "Burger of the Day",
+    "rating": 2,
+    "note": "Could use more garlic",
+    "lastChecked": "2024-05-20"
+  },
+  {
+    "familyName": "Belchers",
+    "preferredBy": "Louise Belcher",
+    "createdBy": "Linda Belcher",
+    "itemName": "Louise's Bunny Ears",
+    "rating": 5,
+    "note": "The pink ones, needs a wash.",
+    "lastChecked": "2024-05-20"
+  },
+  {
+    "familyName": "Belchers",
+    "preferredBy": "Gene Belcher",
+    "createdBy": "Linda Belcher",
+    "itemName": "Pasta",
+    "rating": 4,
+    "note": "Loves to have it with cheese.",
+    "lastChecked": "2024-06-25"
+  },
+  {
+    "familyName": "Belchers",
+    "preferredBy": "Tina Belcher",
+    "createdBy": "Bob Belcher",
+    "itemName": "Jimmy Pesto Jr.",
+    "rating": 5,
+    "note": "Son of Jimmy Pesto, family archnemesis",
+    "lastChecked": "2025-09-16"
+  }
+]

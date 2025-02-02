@@ -38,17 +38,17 @@
     "familyName": "Belchers"
   },
   {
+    "name": "Louise Belcher",
+    "role": "child",
+    "familyName": "Belchers"
+  },
+  {
     "name": "Tina Belcher",
     "role": "child",
     "familyName": "Belchers"
   },
   {
     "name": "Gene Belcher",
-    "role": "child",
-    "familyName": "Belchers"
-  },
-  {
-    "name": "Louise Belcher",
     "role": "child",
     "familyName": "Belchers"
   }

@@ -56,7 +56,7 @@ async function seedItemsandTags(db: db) {
               })
             )?.id;
 
-          if (!tagId) {
+          if (tagId) {
             await db
               .insert(itemsTags)
               .values({ itemId: createdItem.id, tagId: tagId });
