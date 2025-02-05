@@ -6,7 +6,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-import { families, tags, users } from '@/db/schema';
+import { families, users } from '@/db/schema';
 
 const items = pgTable('items', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -15,6 +15,7 @@ const items = pgTable('items', {
   createdBy: integer()
     .notNull()
     .references(() => users.id),
+  image: varchar({ length: 255 }),
   familyId: integer().references(() => families.id),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),

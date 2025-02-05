@@ -21,10 +21,13 @@ export async function seedUsers(db: db) {
       });
 
       if (foundFamily) {
+        const hashedPassword = user.password
+          ? await bcrypt.hash(user.password, 10)
+          : null;
         await db.insert(users).values({
           name: user.name,
           email: user.email || null,
-          password: user.password || null,
+          password: hashedPassword,
           role: user.role as 'parent' | 'child',
           familyId: foundFamily.id,
         });
