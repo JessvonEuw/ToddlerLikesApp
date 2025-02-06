@@ -1,3 +1,4 @@
+import { Button, ButtonText } from "@/components/ui/button";
 import { View, Text } from "react-native";
 
 export default function ItemScreen() {
