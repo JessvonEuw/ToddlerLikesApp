@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Worms",
+    "description": "Creepy crawlies that are fun to have around",
+    "createdBy": "Morticia Addams",
+    "familyName": "Addams",
+    "tags": ["spooky", "gothic"]
+  },
+  {
+    "name": "Skeletons",
+    "description": "Spooky scary skeleton!",
+    "createdBy": "Morticia Addams",
+    "familyName": "Addams",
+    "tags": ["spooky", "scary"]
+  },
+  {
+    "name": "Spiders",
+    "description": "Large or small, bald or hairy. Little arachnids with 8 legs.",
+    "createdBy": "Morticia Addams",
+    "familyName": "Addams",
+    "tags": ["scary", "pet"]
+  },
+  {
+    "name": "Thing",
+    "description": "The family's helping hand",
+    "createdBy": "Gomez Addams",
+    "familyName": "Addams",
+    "tags": ["friend", "pet"]
+  },
+  {
+    "name": "Burger of the Day",
+    "description": "Bob's special creation",
+    "createdBy": "Bob Belcher",
+    "familyName": "Belchers",
+    "tags": ["burger", "restaurant"]
+  },
+  {
+    "name": "Louise's Bunny Ears",
+    "description": "Don't touch them",
+    "createdBy": "Linda Belcher",
+    "familyName": "Belchers",
+    "tags": ["clothing", "style"]
+  },
+  {
+    "name": "Jimmy Pesto Jr.",
+    "description": "All colors, lose all over the house",
+    "createdBy": "Linda Belcher",
+    "familyName": "Belchers",
+    "tags": ["clothing", "favorite"]
+  },
+  {
+    "name": "Pasta",
+    "description": "Tend to make a classic bolognese. Add cheese for the best flavor.",
+    "createdBy": "Bob Belcher",
+    "familyName": "Belchers",
+    "tags": ["food", "restaurant"]
+  }
+]
