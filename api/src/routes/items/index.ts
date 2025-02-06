@@ -9,6 +9,7 @@ import {
 import { createItemsSchema, updateItemsSchema } from '@/db/schema';
 import { validateData } from '@/middlewares/validationMiddleware.js';
 import { verifyToken, verifyParent } from '@/middlewares/authMiddleware.js';
+import { multerUpload, uploadToB2 } from '@/middlewares/imageMiddleware.js';
 
 const router = Router();
 
@@ -20,13 +21,18 @@ router.post(
   '/',
   verifyToken,
   verifyParent,
+  multerUpload.single('image'),
+  uploadToB2('items'),
   validateData(createItemsSchema),
   createItem
 );
+
 router.post(
   '/tags',
   verifyToken,
   verifyParent,
+  multerUpload.single('image'),
+  uploadToB2('items'),
   validateData(createItemsSchema),
   createItem
 );
@@ -35,6 +41,8 @@ router.put(
   '/:id',
   verifyToken,
   verifyParent,
+  multerUpload.single('image'),
+  uploadToB2('items'),
   validateData(updateItemsSchema),
   updateItem
 );

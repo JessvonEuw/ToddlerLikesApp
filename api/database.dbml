@@ -1,19 +1,20 @@
-Table "drizzle"."__drizzle_migrations" {
-  "id" int4 [pk, not null, increment]
-  "hash" text [not null]
-  "created_at" int8
+Enum "role" {
+  "parent"
+  "child"
 }
 
 Table "families" {
   "id" int4 [pk, not null, increment]
   "name" varchar(255) [not null]
   "createdAt" timestamp [not null, default: `now()`]
-  "updatedAt" timestamp [not null, default: `now()`]
 }
 
 Table "items" {
   "id" int4 [pk, not null, increment]
   "name" varchar(255) [not null]
+  "description" text
+  "createdBy" int4 [not null]
+  "image" varchar(255)
   "familyId" int4
   "createdAt" timestamp [not null, default: `now()`]
   "updatedAt" timestamp [not null, default: `now()`]
@@ -27,31 +28,47 @@ Table "items_tags" {
 
 Table "preferences" {
   "id" int4 [pk, not null, increment]
-  "item_id" varchar(255) [not null]
   "note" text
-  "rating" int4
-  "lastDate" date
+  "rating" int4 [default: 0]
+  "lastChecked" date
+  "itemId" int4 [not null]
+  "userId" int4 [not null]
+  "familyId" int4 [not null]
+  "createdBy" int4 [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+
+  Indexes {
+    (userId, itemId) [type: btree, name: "preferences_userId_itemId_unique"]
+  }
 }
 
 Table "tags" {
   "id" int4 [pk, not null, increment]
   "name" varchar(50) [not null]
   "familyId" int4
+  "createdBy" int4 [not null]
   "createdAt" timestamp [not null, default: `now()`]
   "updatedAt" timestamp [not null, default: `now()`]
+
+  Indexes {
+    (name, familyId) [type: btree, name: "tags_name_familyId_index"]
+  }
 }
 
 Table "users" {
   "id" int4 [pk, not null, increment]
+  "avatar" varchar(255)
   "name" varchar(255) [not null]
-  "email" varchar(255) [unique, not null]
-  "password" varchar(255) [not null]
-  "role" varchar(255) [not null, default: 'user']
-  "canLogin" bool [default: false]
+  "email" varchar(255) [unique]
+  "password" varchar(255)
+  "role" role [not null, default: 'parent']
+  "familyId" int4
   "createdAt" timestamp [not null, default: `now()`]
   "updatedAt" timestamp [not null, default: `now()`]
-  "familyId" int4
 }
+
+Ref "items_createdBy_users_id_fk":"users"."id" < "items"."createdBy"
 
 Ref "items_familyId_families_id_fk":"families"."id" < "items"."familyId"
 
@@ -59,6 +76,22 @@ Ref "items_tags_itemId_items_id_fk":"items"."id" < "items_tags"."itemId"
 
 Ref "items_tags_tagId_tags_id_fk":"tags"."id" < "items_tags"."tagId"
 
+Ref "preferences_createdBy_users_id_fk":"users"."id" < "preferences"."createdBy"
+
+Ref "preferences_familyId_families_id_fk":"families"."id" < "preferences"."familyId"
+
+Ref "preferences_itemId_items_id_fk":"items"."id" < "preferences"."itemId"
+
+Ref "preferences_userId_users_id_fk":"users"."id" < "preferences"."userId"
+
+Ref "tags_createdBy_users_id_fk":"users"."id" < "tags"."createdBy"
+
 Ref "tags_familyId_families_id_fk":"families"."id" < "tags"."familyId"
 
 Ref "users_familyId_families_id_fk":"families"."id" < "users"."familyId"
+
+Table "drizzle"."__drizzle_migrations" {
+  "id" int4 [pk, not null, increment]
+  "hash" text [not null]
+  "created_at" int8
+}

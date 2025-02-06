@@ -40,7 +40,7 @@ router.post(
         .from(users)
         .where(eq(users.email, email));
 
-      if (!loginUser) {
+      if (!loginUser || !loginUser.password) {
         // Don't provide too much info in message, hackers can use these details
         res.status(401).send({ message: 'Authentication failed' });
         return;

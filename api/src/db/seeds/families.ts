@@ -17,7 +17,7 @@ export async function seedUsers(db: db) {
   await Promise.all(
     usersData.map(async user => {
       const foundFamily = await db.query.families.findFirst({
-        where: eq(user.familyName, families.name),
+        where: eq(families.name, user.familyName),
       });
 
       if (foundFamily) {

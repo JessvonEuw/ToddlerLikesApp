@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
 import { db } from '@/db';
-import { items } from '@/db/schema';
+import { users, items } from '@/db/schema';
 
 export async function listItems(req: Request, res: Response) {
   try {
@@ -33,10 +33,22 @@ export async function createItem(req: Request, res: Response) {
     const userId = req.userId;
     if (!userId) {
       res.status(400).send({ message: 'Invalid item data' });
+      return;
     }
+
+    const [foundUser] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId));
+
+    if (!foundUser) {
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
+
     const [createdItem] = await db
       .insert(items)
-      .values(req.cleanBody)
+      .values({ ...req.cleanBody, familyId: foundUser.familyId })
       .returning();
     res.status(201).json(createdItem);
   } catch (e) {
